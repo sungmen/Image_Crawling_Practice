@@ -36,7 +36,7 @@ def YandexImageCrawler():
     
     img_data = BeautifulSoup(driver.page_source,"html.parser").find_all("a", "serp-item__link")
 
-    for i in enumerate(img_data[1:]):
+    for i in enumerate(img_data[1:200]):
         href_src = "https://yandex.com" + i[1].attrs['href']
         driver.get(href_src)
         temp_data = BeautifulSoup(driver.page_source,"html.parser").find_all("img","MMImage-Origin")
