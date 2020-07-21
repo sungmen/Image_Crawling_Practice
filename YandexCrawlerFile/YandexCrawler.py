@@ -24,9 +24,11 @@ def YandexImageCrawler():
     options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
     options.add_argument('--disable-gpu')
+    options.add_argument('--log-level=3')
 
     # Chromedriver 
     driver = webdriver.Chrome("chromedriver.exe", chrome_options=options)
+
     driver.get(url_info + searchWord)
 
     for i in range(600):
@@ -43,13 +45,17 @@ def YandexImageCrawler():
             attr_src = temp_data[0].attrs['src']
         except KeyError:
             attr_src = temp_data[0].attrs['data-src']
+        except IndexError:
+            continue
         try:
             request = Request(attr_src, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'})
         except ValueError:
             attr_src = "https:" + attr_src
             request = Request(attr_src, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'})
- 
-        t = urlopen(request).read()
+        try:
+            t = urlopen(request).read()
+        except client.IncompleteRead as err:
+            t = err.partial
         filename = searchWord+str(i[0]+1)+'.jpg'
         json_data.append({'URL':attr_src})
         with open(filename,"wb") as f:
