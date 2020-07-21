@@ -43,7 +43,12 @@ def YandexImageCrawler():
             attr_src = temp_data[0].attrs['src']
         except KeyError:
             attr_src = temp_data[0].attrs['data-src']
-        request = Request(attr_src, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'})
+        try:
+            request = Request(attr_src, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'})
+        except ValueError:
+            attr_src = "https:" + attr_src
+            request = Request(attr_src, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'})
+ 
         t = urlopen(request).read()
         filename = searchWord+str(i[0]+1)+'.jpg'
         json_data.append({'URL':attr_src})
