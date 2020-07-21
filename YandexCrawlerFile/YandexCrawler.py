@@ -4,7 +4,6 @@ import requests as req
 from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
 from selenium import webdriver
-import asyncio
 
 #  ex) python YandexCrawler -name dog
 parser = argparse.ArgumentParser()
