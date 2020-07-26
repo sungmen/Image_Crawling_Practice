@@ -5,5 +5,5 @@ execute YandexCrawler file installation requirement [ChromeDriver](https://chrom
 example
 
 ```
-python YandexCrawler.py -name "github"
+python YandexCrawler.py -name "github" -count 8
 ```
