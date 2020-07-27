@@ -9,10 +9,13 @@ import asyncio
 #  ex) python YandexCrawler -name dog
 parser = argparse.ArgumentParser()
 parser.add_argument("-name", "--searchWord", required=True)
-parser.add_argument("-count", "--wantCount", required=True)
+parser.add_argument("-count", "--wantCount", default=400)
 args = parser.parse_args()
 searchWord = args.searchWord
 count = args.wantCount
+if (int(count) > 1000):
+    count = 1000
+    print('Limit 1000 Picture')
 
 async def PrintAll(i, driver, json_data):
     href_src = "https://yandex.com" + i[1].attrs['href']
@@ -62,8 +65,8 @@ async def YandexImageCrawler():
 
     driver.get(url_info + searchWord)
 
-    for i in range(int(count) * 6):
-        driver.execute_script('window.scrollBy(0,10000)')
+    for i in range(4000):
+        driver.execute_script('window.scrollBy(0,document.body.scrollHeight)')
     
     img_data = BeautifulSoup(driver.page_source,"html.parser").find_all("a", "serp-item__link")
 
