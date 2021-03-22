@@ -10,5 +10,5 @@ python ImageCrawler.py -name dog
 
 Yandex Image Search
 ```
-python .\YandexCrawlerFile\YandexCrawler.py -name "dog" -count 100
+python .\YandexCrawlerFile\YandexCrawler_lowVersion.py -name dog
 ```
